@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enes Yılmaz</title>
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="#" onclick="changeContent('home')">Anasayfa</a></li>
+            <li><a href="#" onclick="changeContent('social-media')">Sosyal Medya</a></li>
+            <li><a href="#" onclick="changeContent('about')">Hakkında</a></li>
+        </ul>
+    </div>
+
+    <div class="content" id="home-content">
+        <h1>Hoş Geldiniz!</h1>
+        <p>Merhaba, ben Enes Yılmaz. Web geliştirme ile ilgileniyorum.</p>
+        <!-- İstediğiniz diğer içerikleri ekleyebilirsiniz -->
+    </div>
+
+    <div class="content" id="social-media-content" style="display:none;">
+        <h1>Sosyal Medya</h1>
+        <div class="social-media-icons">
+            <a href="https://www.linkedin.com/in/enes-y%C4%B1lmaz-72432a23b/" class="icon-link" target="_blank">
+                <img src="res/linkedin-icon.png" alt="linkedin">
+            </a>
+            <a href="https://twitter.com/Enesyilmaz5" class="icon-link" target="_blank">
+                <img src="res/twitter-icon.png" alt="Twitter">
+            </a>
+            <a href="https://www.instagram.com/enes.ylmz_/" class="icon-link" target="_blank">
+                <img src="res/instagram-icon.png" alt="Instagram">
+            </a>
+            <a href="https://github.com/Enesyilmaz09" class="icon-link" target="_blank">
+                <img src="res/github-icon.png" alt="github">
+            </a>
+            <!-- Diğer sosyal medya ikonlarını ekleyebilirsiniz -->
+        </div>
+    </div>
+
+    <div class="content" id="about-content" style="display:none;">
+        <!-- Buraya hakkında içeriğinizi ekleyin -->
+        <h1>Hakkında</h1>
+        <p>Burada hakkında içeriği olacak.</p>
+    </div>
+
+    <script>
+        function changeContent(section) {
+            var sections = ['home', 'social-media', 'about'];
+            for (var i = 0; i < sections.length; i++) {
+                var content = document.getElementById(sections[i] + '-content');
+                if (sections[i] === section) {
+                    content.style.display = 'block';
+                } else {
+                    content.style.display = 'none';
+                }
+            }
+        }
+    </script>
+    <footer class="footer">
+        <p>&copy; 2023 Enes Yılmaz. Tüm hakları saklıdır.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,182 @@
+body {
+    background-image: url("res/1.jpg");
+    background-size: cover;
+    
+    margin: 0;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Şeffaf arka plan rengi */
+    color: aliceblue;
+    height: 50px;
+    text-align: center;
+}
+
+
+.navbar ul {
+    margin-left: 10%;
+    padding: 0;
+}
+
+.navbar li {
+    display: inline-block;
+    margin-right: 10%;
+}
+
+.navbar li a {
+    text-decoration: none;
+    color: aliceblue;
+    font-weight: bold;
+}
+.navbar li :hover{
+    color: white;
+}
+/* Diğer stiller burada */
+
+/* Hover efekti animasyonu */
+.navbar li a {
+    text-decoration: none;
+    color: aliceblue;
+    font-weight: bold;
+    position: relative;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover efekti için renk değişimi ve alt çizgi */
+.navbar li a:hover {
+    color: white; /* Hover rengi */
+    transform: scale(1.1); /* 10% büyütme efekti */
+}
+
+.navbar li a:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px; /* Alt çizgiyi istediğiniz konumda ayarlayabilirsiniz */
+    width: 100%;
+    height: 2px; /* Alt çizgi kalınlığı */
+    background-color: white; /* Alt çizgi rengi */
+    transform: scaleX(0); /* Başlangıçta görünmez yapın */
+    transition: transform 0.3s ease;
+}
+
+.navbar li a:hover:after {
+    transform: scaleX(1); /* Hover yapıldığında alt çizgiyi genişletin */
+}
+
+.content {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 50px; /* İçerik etrafındaki boşluk */
+    text-align: center; /* İçeriği merkezle */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Gölge efekti */
+    border-radius: 10px; /* Köşeleri yuvarlama */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%; /* Sayfanın genişliği */
+    max-width: 800px; /* Maksimum genişlik */
+  
+}
+
+.content h1 {
+    font-size: 2em; /* Başlık font büyüklüğü */
+}
+
+.content p {
+    font-size: 1.2em; /* Paragraf font büyüklüğü */
+    line-height: 1.6; /* Satır yüksekliği */
+}
+
+/* style.css */
+
+/* Diğer stiller burada */
+
+/* Sosyal medya içeriği */
+.social-media-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.icon-link {
+    display: inline-block;
+    position: relative;
+    width: 60px; /* İkona uygun bir başlangıç boyutu */
+    height: 60px; /* İkona uygun bir başlangıç boyutu */
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px; /* Köşeleri yuvarlatmak için */
+}
+
+.icon-link img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.icon-link:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.icon-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    transform-origin: 0 0;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.icon-link:hover::before {
+    transform-origin: 100% 100%;
+    transform: scaleX(1);
+}
+/* style.css */
+
+/* Diğer stiller burada */
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: aliceblue;
+    height: 50px;
+    text-align: center;
+}
+
+.content {
+    margin-top: 50px; /* Navbar'ın altında başlasın */
+    padding: 20px;
+    color: white;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
