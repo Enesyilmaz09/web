@@ -181,16 +181,23 @@
     <div class="container">
         <!-- İLK SORU -->
         <div class="question-box" id="questionBox1">
-            <h2>Beni Seviyormusun Cancikimmm💖</h2>
+            <h2>Sen Fatik misin? </h2>
             <button class="btn btn-yes" id="yesBtn1">EVET!</button>
             <button class="btn btn-no" id="noBtn1">Hayır</button>
         </div>
 
         <!-- İKİNCİ SORU (GİZLİ) -->
         <div class="question-box" id="questionBox2" style="display:none;">
+            <h2>AA Güzelimm Gelmişş Beni Seviyormusun Cancikimmm💖</h2>
+            <button class="btn btn-yes" id="yesBtn2">EVET!</button>
+            <button class="btn btn-no" id="noBtn2">Hayır</button>
+        </div>
+
+        <!-- ÜÇÜNCÜ SORU (GİZLİ) -->
+        <div class="question-box" id="questionBox3" style="display:none;">
             <h2>Sew olakmı ? <3</h2>
-            <button class="btn btn-yes" id="yesBtn2">Tabi kii</button>
-            <button class="btn btn-no" id="noBtn2">hyr</button>
+            <button class="btn btn-yes" id="yesBtn3">Tabi kii</button>
+            <button class="btn btn-no" id="noBtn3">hyr</button>
         </div>
 
         <!-- İLK KUTLAMA (GİZLİ) -->
@@ -226,6 +233,7 @@
         const yesBtn1 = document.getElementById('yesBtn1');
         const questionBox1 = document.getElementById('questionBox1');
         const questionBox2 = document.getElementById('questionBox2');
+        const questionBox3 = document.getElementById('questionBox3');
         const celebration = document.getElementById('celebration');
         const celebration2 = document.getElementById('celebration2');
         const heartBtn = document.getElementById('heartBtn');
@@ -261,31 +269,20 @@
             button.textContent = messages[Math.floor(Math.random() * messages.length)];
         }
 
-        noBtn1.addEventListener('mouseover', function() {
-            moveButtonRandomly(noBtn1);
-        });
 
         noBtn1.addEventListener('click', function(e) {
             e.preventDefault();
             if (navigator.vibrate) navigator.vibrate(200);
-            alert("😜 Sence Buna izin verirmiyim EVET'e basmayı dene");
+            alert("Sadece Fatik girebilir Kayboll !!!!");
         });
 
         yesBtn1.addEventListener('click', function() {
             questionBox1.style.display = 'none';
-            celebration.style.display = 'block';
-            createConfetti();
-            startHearts();
-            
-            // 3 saniye sonra ikinci soruyu göster
-            setTimeout(() => {
-                celebration.style.display = 'none';
-                questionBox2.style.display = 'block';
-                window.scrollTo({
-                    top: questionBox2.offsetTop - 100,
-                    behavior: 'smooth'
-                });
-            }, 3000);
+            questionBox2.style.display = 'block';
+            window.scrollTo({
+                top: questionBox2.offsetTop - 100,
+                behavior: 'smooth'
+            });
         });
 
         // İKİNCİ SORU İÇİN KODLAR
@@ -299,43 +296,58 @@
         noBtn2.addEventListener('click', function(e) {
             e.preventDefault();
             if (navigator.vibrate) navigator.vibrate(200);
-            alert("💔 Böyle bir teklifi reddedemezsin! Lütfen 'TABİİ Kİ' butonuna bas!");
+            alert("😜 Sence Buna izin verirmiyim EVET'e basmayı dene");
         });
 
         yesBtn2.addEventListener('click', function() {
             questionBox2.style.display = 'none';
-            celebration2.style.display = 'block';
+            celebration.style.display = 'block';
             createConfetti();
             startHearts();
-            window.scrollTo({
-                top: celebration2.offsetTop - 100,
-                behavior: 'smooth'
-            });
+            
+            // 3 saniye sonra üçüncü soruyu göster
+            setTimeout(() => {
+                celebration.style.display = 'none';
+                questionBox3.style.display = 'block';
+                window.scrollTo({
+                    top: questionBox3.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }, 3000);
         });
-            yesBtn2.addEventListener('click', function() {
+
+        // ÜÇÜNCÜ SORU İÇİN KODLAR
+        const noBtn3 = document.getElementById('noBtn3');
+        const yesBtn3 = document.getElementById('yesBtn3');
+
+        noBtn3.addEventListener('mouseover', function() {
+            moveButtonRandomly(noBtn3);
+        });
+
+        noBtn3.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (navigator.vibrate) navigator.vibrate(200);
+            alert("💔 Böyle bir teklifi reddedemezsin! Lütfen 'TABİİ Kİ' butonuna bas!");
+        });
+
+        yesBtn3.addEventListener('click', function() {
             // Emin misin diye soran alert
             const userResponse = confirm("Emin misin canımm? Bak dönüşü yok! ❤️‍🔥\n\n('Tamam' diyerek bana sonsuza kadar bağlanmayı kabul ediyorsun!)");
             
             if (userResponse) {
-                questionBox2.style.display = 'none';
+                questionBox3.style.display = 'none';
                 celebration2.style.display = 'block';
                 createConfetti();
                 startHearts();
-                
-                setTimeout(() => {
-                    celebration2.style.display = 'none';
-                    questionBox3.style.display = 'block';
-                    window.scrollTo({
-                        top: questionBox3.offsetTop - 100,
-                        behavior: 'smooth'
-                    });
-                }, 3000);
+                window.scrollTo({
+                    top: celebration2.offsetTop - 100,
+                    behavior: 'smooth'
+                });
             } else {
                 // Eğer kullanıcı "İptal" derse şakacı bir mesaj
                 alert("Hahahaa! Zaten kaçışın yok birtanem! 😜\n\n(Biraz düşün, sonra tekrar bas 'TABİİ Kİ' butonuna!)");
             }
         });
-
 
         // ORTAK FONKSİYONLAR
         heartBtn.addEventListener('click', function() {
@@ -413,4 +425,4 @@
         }
     </script>
 </body>
-</html> 
+</html>
