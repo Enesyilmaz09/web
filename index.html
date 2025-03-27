@@ -188,9 +188,9 @@
 
         <!-- İKİNCİ SORU (GİZLİ) -->
         <div class="question-box" id="questionBox2" style="display:none;">
-            <h2>Peki sevgilim olurmusun canikooom? 💍</h2>
-            <button class="btn btn-yes" id="yesBtn2">TABİİ Kİ!</button>
-            <button class="btn btn-no" id="noBtn2">Şimdi değil</button>
+            <h2>Sew olakmı ? <3</h2>
+            <button class="btn btn-yes" id="yesBtn2">Tabi kii</button>
+            <button class="btn btn-no" id="noBtn2">hyr</button>
         </div>
 
         <!-- İLK KUTLAMA (GİZLİ) -->
@@ -251,9 +251,9 @@
             
             // Rastgele mesaj göster
             const messages = [
-                "Yakalayamazsın! 😜",
+                "Bu cevabı kabul etmiyorum! 😜",
                 "Hadi ama, EVET'e bas! 😘",
-                "Kaçıyorummm! 🏃‍♂️",
+                "Düşünme bile ",
                 "Yanlış buton! 😆",
                 "Sadece EVET var! 💖",
                 "Hihihii! 🤭"
@@ -268,7 +268,7 @@
         noBtn1.addEventListener('click', function(e) {
             e.preventDefault();
             if (navigator.vibrate) navigator.vibrate(200);
-            alert("😜 Hayır demek yok! Sadece EVET butonuna basabilirsin!");
+            alert("😜 Sence Buna izin verirmiyim EVET'e basmayı dene");
         });
 
         yesBtn1.addEventListener('click', function() {
@@ -312,6 +312,30 @@
                 behavior: 'smooth'
             });
         });
+            yesBtn2.addEventListener('click', function() {
+            // Emin misin diye soran alert
+            const userResponse = confirm("Emin misin canımm? Bak dönüşü yok! ❤️‍🔥\n\n('Tamam' diyerek bana sonsuza kadar bağlanmayı kabul ediyorsun!)");
+            
+            if (userResponse) {
+                questionBox2.style.display = 'none';
+                celebration2.style.display = 'block';
+                createConfetti();
+                startHearts();
+                
+                setTimeout(() => {
+                    celebration2.style.display = 'none';
+                    questionBox3.style.display = 'block';
+                    window.scrollTo({
+                        top: questionBox3.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }, 3000);
+            } else {
+                // Eğer kullanıcı "İptal" derse şakacı bir mesaj
+                alert("Hahahaa! Zaten kaçışın yok birtanem! 😜\n\n(Biraz düşün, sonra tekrar bas 'TABİİ Kİ' butonuna!)");
+            }
+        });
+
 
         // ORTAK FONKSİYONLAR
         heartBtn.addEventListener('click', function() {
@@ -389,4 +413,4 @@
         }
     </script>
 </body>
-</html>
+</html> 
