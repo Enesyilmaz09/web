@@ -69,6 +69,33 @@
             min-height: 250px;
             overflow: hidden;
         }
+        .password-box {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 4rem auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s;
+            border: 2px solid #d23669;
+            position: relative;
+            display: none;
+        }
+        .password-input {
+            padding: 12px 20px;
+            margin: 15px 0;
+            border: 2px solid #ff6b81;
+            border-radius: 50px;
+            font-size: 1rem;
+            width: 200px;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .password-input:focus {
+            border-color: #d23669;
+            box-shadow: 0 0 10px rgba(210, 54, 105, 0.3);
+        }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -96,7 +123,13 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease-out;
         }
-        .btn-yes:hover {
+        .btn-submit {
+            background: linear-gradient(to right, #d23669, #ff6b81);
+            color: white;
+            box-shadow: 0 4px 15px rgba(210, 54, 105, 0.4);
+            padding: 12px 30px;
+        }
+        .btn-yes:hover, .btn-submit:hover {
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 6px 20px rgba(210, 54, 105, 0.6);
         }
@@ -171,6 +204,12 @@
                 opacity: 0;
             }
         }
+        .error-message {
+            color: #d23669;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -184,6 +223,14 @@
             <h2>Sen Fatik misin? </h2>
             <button class="btn btn-yes" id="yesBtn1">EVET!</button>
             <button class="btn btn-no" id="noBtn1">Hayır</button>
+        </div>
+
+        <!-- ŞİFRE SORUSU (GİZLİ) -->
+        <div class="password-box" id="passwordBox">
+            <h2>Şifreyi Gir Canikcimmm 💖</h2>
+            <input type="password" class="password-input" id="passwordInput" placeholder="Şifre">
+            <div class="error-message" id="errorMessage">Yanlış şifre! Tekrar dene cankikoom 😘</div>
+            <button class="btn btn-submit" id="submitBtn">Gönder</button>
         </div>
 
         <!-- İKİNCİ SORU (GİZLİ) -->
@@ -232,12 +279,19 @@
         const noBtn1 = document.getElementById('noBtn1');
         const yesBtn1 = document.getElementById('yesBtn1');
         const questionBox1 = document.getElementById('questionBox1');
+        const passwordBox = document.getElementById('passwordBox');
+        const passwordInput = document.getElementById('passwordInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const errorMessage = document.getElementById('errorMessage');
         const questionBox2 = document.getElementById('questionBox2');
         const questionBox3 = document.getElementById('questionBox3');
         const celebration = document.getElementById('celebration');
         const celebration2 = document.getElementById('celebration2');
         const heartBtn = document.getElementById('heartBtn');
         const floatingHearts = document.getElementById('floatingHearts');
+
+        // Doğru şifre
+        const CORRECT_PASSWORD = "neşem";
 
         // Hayır butonunu tüm sayfada hareket ettiren fonksiyon
         function moveButtonRandomly(button) {
@@ -269,7 +323,6 @@
             button.textContent = messages[Math.floor(Math.random() * messages.length)];
         }
 
-
         noBtn1.addEventListener('click', function(e) {
             e.preventDefault();
             if (navigator.vibrate) navigator.vibrate(200);
@@ -278,11 +331,36 @@
 
         yesBtn1.addEventListener('click', function() {
             questionBox1.style.display = 'none';
-            questionBox2.style.display = 'block';
+            passwordBox.style.display = 'block';
             window.scrollTo({
-                top: questionBox2.offsetTop - 100,
+                top: passwordBox.offsetTop - 100,
                 behavior: 'smooth'
             });
+        });
+
+        // Şifre kontrolü
+        submitBtn.addEventListener('click', function() {
+            if (passwordInput.value === CORRECT_PASSWORD) {
+                passwordBox.style.display = 'none';
+                questionBox2.style.display = 'block';
+                window.scrollTo({
+                    top: questionBox2.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+                errorMessage.style.display = 'none';
+            } else {
+                errorMessage.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+                if (navigator.vibrate) navigator.vibrate(200);
+            }
+        });
+
+        // Enter tuşu ile şifre gönderme
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitBtn.click();
+            }
         });
 
         // İKİNCİ SORU İÇİN KODLAR
