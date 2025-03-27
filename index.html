@@ -2,81 +2,87 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sana Özel Canikcimmm</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
         body {
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(135deg, #fff2f7 0%, #ffd6e7 100%);
             margin: 0;
-            padding: 0;
             color: #333;
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
             position: relative;
-            touch-action: manipulation;
         }
         header {
             background: rgba(255, 255, 255, 0.9);
-            padding: 2rem 1rem;
+            padding: 4rem 2rem;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         h1, h2, h3 {
             font-family: 'Playfair Display', serif;
             color: #d23669;
-            margin-top: 0;
         }
         h1 {
-            font-size: 2rem;
+            font-size: 2.8rem;
             margin-bottom: 0.5rem;
             background: linear-gradient(to right, #d23669, #ff6b81);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .container {
-            width: 95%;
             max-width: 700px;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 2rem;
+        }
+        .love-letter {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin: 3rem auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(210, 54, 105, 0.1);
+            transform-style: preserve-3d;
+        }
+        .love-letter:before {
+            content: """;
+            font-size: 8rem;
+            color: rgba(210, 54, 105, 0.05);
+            position: absolute;
+            top: -30px;
+            left: 10px;
+            z-index: -1;
         }
         .question-box {
             background: white;
-            padding: 1.5rem;
+            padding: 2.5rem;
             border-radius: 15px;
             text-align: center;
-            margin: 2rem auto;
+            margin: 4rem auto;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             animation: fadeIn 1s;
             border: 2px dashed #ff6b81;
             position: relative;
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            min-height: 250px;
+            overflow: hidden;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .btn {
-            padding: 12px 25px;
-            margin: 10px;
+            padding: 15px 35px;
+            margin: 15px;
             border: none;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: bold;
             letter-spacing: 1px;
-            min-width: 120px;
         }
         .btn-yes {
             background: linear-gradient(to right, #d23669, #ff6b81);
@@ -86,10 +92,9 @@
         .btn-no {
             background: #f8f9fa;
             color: #555;
-            position: fixed;
+            position: relative;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease-out;
-            z-index: 100;
         }
         .btn-yes:hover {
             transform: translateY(-3px) scale(1.05);
@@ -106,17 +111,17 @@
         }
         .heart {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 30px;
+            right: 30px;
             background: #ff6b81;
             color: white;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             box-shadow: 0 4px 15px rgba(255, 107, 129, 0.5);
             cursor: pointer;
             animation: pulse 2s infinite;
@@ -129,17 +134,17 @@
         }
         footer {
             text-align: center;
-            padding: 1rem;
+            padding: 2rem;
             color: #d23669;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
-        #celebration, #celebration2, #ready-check {
+        #celebration, #celebration2 {
             display: none;
             text-align: center;
             animation: fadeIn 0.5s;
         }
-        #celebration h2, #celebration2 h2, #ready-check h2 {
-            font-size: 1.8rem;
+        #celebration h2, #celebration2 h2 {
+            font-size: 3rem;
             margin-bottom: 1rem;
             background: linear-gradient(to right, #d23669, #ff8fab);
             -webkit-background-clip: text;
@@ -166,31 +171,6 @@
                 opacity: 0;
             }
         }
-        .gif-container {
-            margin: 1rem 0;
-        }
-        .gif-container img {
-            max-width: 100%;
-            border-radius: 10px;
-            height: auto;
-        }
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.8rem;
-            }
-            .question-box {
-                padding: 1rem;
-                min-height: 180px;
-            }
-            .btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-                min-width: 100px;
-            }
-            #celebration h2, #celebration2 h2, #ready-check h2 {
-                font-size: 1.5rem;
-            }
-        }
     </style>
 </head>
 <body>
@@ -206,13 +186,6 @@
             <button class="btn btn-no" id="noBtn1">Hayır</button>
         </div>
 
-        <!-- HAZIR MISIN SORUSU -->
-        <div class="question-box" id="ready-check" style="display:none;">
-            <h2>Hazır mısın canikom? 😊</h2>
-            <button class="btn btn-yes" id="readyBtn">Hazırım!</button>
-            <button class="btn btn-no" id="notReadyBtn">Biraz bekler misin?</button>
-        </div>
-
         <!-- İKİNCİ SORU (GİZLİ) -->
         <div class="question-box" id="questionBox2" style="display:none;">
             <h2>Peki sevgilim olurmusun canikooom? 💍</h2>
@@ -224,16 +197,17 @@
         <div id="celebration">
             <h2>Tabiki Biliyordummmm! 🎉</h2>
             <p style="font-size: 1.2rem; max-width: 500px; margin: 0 auto;">Bende Seni Seviyorummmm &lt;3 </p>
-            <div class="gif-container">
-                <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExc2dvdnJpaWp6bjAwa2FhMGxuM2gxd21ya3Voc25jajRwMnJhZ2FiNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26gsspfbt1HfVQ9va/giphy.gif" alt="Kutlama">
+            <div style="margin: 2rem 0;">
+                <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExc2dvdnJpaWp6bjAwa2FhMGxuM2gxd21ya3Voc25jajRwMnJhZ2FiNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26gsspfbt1HfVQ9va/giphy.gif" alt="Kutlama" style="max-width: 300px; border-radius: 10px;">
             </div>
         </div>
 
         <!-- İKİNCİ KUTLAMA (GİZLİ) -->
         <div id="celebration2">
             <h2>Harbimiii Artık sana Birtanem diyebilirimmm o zaman 💖</h2>
-            <div class="gif-container">
-                <img src="https://media.giphy.com/media/M9iWKMk1v1J2bO9O8y/giphy.gif?cid=790b7611fv71pjhvrctqmlagil6dlfqcg2pc5d8jxl1thfx5&ep=v1_gifs_search&rid=giphy.gif&ct=g" alt="Evlilik">
+            <p style="font-size: 1.5rem; max-width: 500px; margin: 1rem auto;"></p>
+            <div style="margin: 2rem 0;">
+                <img src="https://media.giphy.com/media/M9iWKMk1v1J2bO9O8y/giphy.gif?cid=790b7611fv71pjhvrctqmlagil6dlfqcg2pc5d8jxl1thfx5&ep=v1_gifs_search&rid=giphy.gif&ct=g" alt="Evlilik" style="max-width: 400px; border-radius: 10px;">
             </div>
             <p style="font-size: 1.2rem; font-style: italic;">Seninle sonsuza kadar mutlu olacağım...</p>
         </div>
@@ -247,34 +221,35 @@
     </footer>
 
     <script>
-        // Elementleri seç
+        // İLK SORU İÇİN KODLAR
         const noBtn1 = document.getElementById('noBtn1');
         const yesBtn1 = document.getElementById('yesBtn1');
-        const readyBtn = document.getElementById('readyBtn');
-        const notReadyBtn = document.getElementById('notReadyBtn');
-        const noBtn2 = document.getElementById('noBtn2');
-        const yesBtn2 = document.getElementById('yesBtn2');
         const questionBox1 = document.getElementById('questionBox1');
-        const readyCheck = document.getElementById('ready-check');
         const questionBox2 = document.getElementById('questionBox2');
         const celebration = document.getElementById('celebration');
         const celebration2 = document.getElementById('celebration2');
         const heartBtn = document.getElementById('heartBtn');
         const floatingHearts = document.getElementById('floatingHearts');
 
-        // Hayır butonunu hareket ettir
+        // Hayır butonunu tüm sayfada hareket ettiren fonksiyon
         function moveButtonRandomly(button) {
+            // Butonun boyutlarını al
             const buttonWidth = button.offsetWidth;
             const buttonHeight = button.offsetHeight;
+            
+            // Sayfanın görünen alanı içinde rastgele pozisyon
             const maxX = window.innerWidth - buttonWidth;
             const maxY = window.innerHeight - buttonHeight;
             
-            const randomX = Math.max(10, Math.min(maxX - 10, Math.random() * maxX));
-            const randomY = Math.max(10, Math.min(maxY - 10, Math.random() * maxY));
+            const randomX = Math.max(0, Math.min(maxX, Math.random() * maxX));
+            const randomY = Math.max(0, Math.min(maxY, Math.random() * maxY));
             
+            // Pozisyonu ayarla
+            button.style.position = 'fixed';
             button.style.left = `${randomX}px`;
             button.style.top = `${randomY}px`;
             
+            // Rastgele mesaj göster
             const messages = [
                 "Yakalayamazsın! 😜",
                 "Hadi ama, EVET'e bas! 😘",
@@ -286,10 +261,9 @@
             button.textContent = messages[Math.floor(Math.random() * messages.length)];
         }
 
-        // İLK SORU
-        noBtn1.addEventListener('mouseover touchstart', function() {
+        noBtn1.addEventListener('mouseover', function() {
             moveButtonRandomly(noBtn1);
-        }, {passive: true});
+        });
 
         noBtn1.addEventListener('click', function(e) {
             e.preventDefault();
@@ -303,41 +277,24 @@
             createConfetti();
             startHearts();
             
-            // 3 saniye sonra hazır mısın sorusunu göster
+            // 3 saniye sonra ikinci soruyu göster
             setTimeout(() => {
                 celebration.style.display = 'none';
-                readyCheck.style.display = 'block';
+                questionBox2.style.display = 'block';
                 window.scrollTo({
-                    top: readyCheck.offsetTop - 50,
+                    top: questionBox2.offsetTop - 100,
                     behavior: 'smooth'
                 });
             }, 3000);
         });
 
-        // HAZIR MISIN SORUSU
-        notReadyBtn.addEventListener('mouseover touchstart', function() {
-            moveButtonRandomly(notReadyBtn);
-        }, {passive: true});
+        // İKİNCİ SORU İÇİN KODLAR
+        const noBtn2 = document.getElementById('noBtn2');
+        const yesBtn2 = document.getElementById('yesBtn2');
 
-        notReadyBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (navigator.vibrate) navigator.vibrate(200);
-            alert("💖 Tamam canikom, biraz bekleyelim... Ama çok uzun sürmez umarım!");
-        });
-
-        readyBtn.addEventListener('click', function() {
-            readyCheck.style.display = 'none';
-            questionBox2.style.display = 'block';
-            window.scrollTo({
-                top: questionBox2.offsetTop - 50,
-                behavior: 'smooth'
-            });
-        });
-
-        // İKİNCİ SORU
-        noBtn2.addEventListener('mouseover touchstart', function() {
+        noBtn2.addEventListener('mouseover', function() {
             moveButtonRandomly(noBtn2);
-        }, {passive: true});
+        });
 
         noBtn2.addEventListener('click', function(e) {
             e.preventDefault();
@@ -351,12 +308,12 @@
             createConfetti();
             startHearts();
             window.scrollTo({
-                top: celebration2.offsetTop - 50,
+                top: celebration2.offsetTop - 100,
                 behavior: 'smooth'
             });
         });
 
-        // KALP BUTONU
+        // ORTAK FONKSİYONLAR
         heartBtn.addEventListener('click', function() {
             const hearts = ['❤️', '💖', '💕', '💗', '💓', '💘'];
             const randomHeart = hearts[Math.floor(Math.random() * hearts.length)];
@@ -374,38 +331,45 @@
             alert(messages[Math.floor(Math.random() * messages.length)]);
         });
 
-        // KONFETİ FONKSİYONU
         function createConfetti() {
             const colors = ['#ff0000', '#ff6b81', '#d23669', '#ff4757', '#ff8fab'];
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < 150; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
                     confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                     confetti.style.left = Math.random() * window.innerWidth + 'px';
                     confetti.style.top = -20 + 'px';
-                    confetti.style.width = Math.random() * 10 + 5 + 'px';
+                    confetti.style.width = Math.random() * 15 + 5 + 'px';
                     confetti.style.height = confetti.style.width;
                     confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
                     if (Math.random() > 0.7) confetti.style.transform = 'rotate('+Math.random()*360+'deg)';
                     document.body.appendChild(confetti);
-                    
                     const animationDuration = Math.random() * 3 + 2;
                     confetti.style.animation = `fall ${animationDuration}s linear forwards`;
-                    
+                    const keyframes = `
+                        @keyframes fall {
+                            to {
+                                transform: translateY(${window.innerHeight + 20}px) rotate(${Math.random() * 720}deg);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    const style = document.createElement('style');
+                    style.innerHTML = keyframes;
+                    document.head.appendChild(style);
                     setTimeout(() => {
                         confetti.remove();
+                        style.remove();
                     }, animationDuration * 1000);
                 }, i * 30);
             }
         }
 
-        // UÇAN KALPLER FONKSİYONU
         function startHearts() {
             const interval = setInterval(() => {
                 createHeart();
             }, 300);
-            
             setTimeout(() => {
                 clearInterval(interval);
             }, 5000);
@@ -416,19 +380,13 @@
             heart.className = 'floating-heart';
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * window.innerWidth + 'px';
-            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
             heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
             floatingHearts.appendChild(heart);
-            
             setTimeout(() => {
                 heart.remove();
             }, 4000);
         }
-
-        // Mobil dokunmatik etkileşimler için ek ayar
-        document.addEventListener('touchmove', function(e) {
-            e.preventDefault();
-        }, {passive: false});
     </script>
 </body>
 </html>
