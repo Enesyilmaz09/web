@@ -1,390 +1,201 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fatik'e Özel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Indie+Flower&display=swap" rel="stylesheet">
+    <title>Online Aşk Oyunu ❤️</title>
     <style>
-        body {
-            font-family: 'Indie Flower', cursive;
-            background: linear-gradient(135deg, #ffcce6 0%, #ff99cc 100%);
-            margin: 0;
-            color: #333;
-            line-height: 1.6;
-            overflow-x: hidden;
-            min-height: 100vh;
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            background: #ffebee;
+            font-family: 'Arial', sans-serif;
+        }
+        #gameCanvas { 
+            display: block; 
+            margin: 20px auto;
+            border: 3px solid #d32f2f;
+            background: #fff;
+        }
+        #playerForm {
             text-align: center;
+            margin: 20px;
         }
-        header {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 3rem 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            position: relative;
+        #roomIdInput { 
+            padding: 10px; 
+            width: 200px;
         }
-        h1, h2, h3 {
-            font-family: 'Comic Neue', cursive;
-            color: #ff0066;
-        }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 0;
-            text-shadow: 3px 3px 0px rgba(255, 153, 204, 0.5);
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        .question-box {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 20px;
-            margin: 3rem auto;
-            box-shadow: 0 10px 25px rgba(255, 0, 102, 0.2);
-            border: 3px dotted #ff0066;
-            position: relative;
-            transform: rotate(-1deg);
-            transition: all 0.3s;
-        }
-        .question-box:hover {
-            transform: rotate(1deg) scale(1.02);
-        }
-        .btn {
-            padding: 15px 40px;
-            margin: 15px;
+        button {
+            background: #d32f2f;
+            color: white;
             border: none;
-            border-radius: 50px;
-            font-size: 1.2rem;
+            padding: 10px 20px;
+            margin-left: 10px;
             cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-            font-family: 'Comic Neue', cursive;
-            position: relative;
-            overflow: hidden;
         }
-        .btn-yes {
-            background: linear-gradient(to right, #ff0066, #ff6699);
-            color: white;
-            box-shadow: 0 5px 15px rgba(255, 0, 102, 0.4);
-            z-index: 1;
-        }
-        .btn-yes:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 8px 25px rgba(255, 0, 102, 0.6);
-        }
-        .btn-no {
-            background: #f0f0f0;
-            color: #666;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.1s;
-        }
-        .celebration {
-            display: none;
-            animation: fadeIn 1s;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .compliment {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            margin: 2rem auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            border-left: 10px solid #ff0066;
-            text-align: left;
-            position: relative;
-            transform: rotate(0.5deg);
-        }
-        .compliment:before {
-            content: "“";
-            font-size: 6rem;
-            color: rgba(255, 0, 102, 0.1);
-            position: absolute;
-            top: -40px;
-            left: 10px;
-            font-family: serif;
-        }
-        .eye-compliment {
-            background: linear-gradient(to right, #000428, #004e92);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            margin: 2rem auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        #status {
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .eye-compliment:before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-            transform: rotate(45deg);
-        }
-        .eye-compliment h3 {
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-        .floating {
-            position: fixed;
-            font-size: 2rem;
-            animation: float 5s linear infinite;
-            z-index: 100;
-            pointer-events: none;
-        }
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-100px) rotate(360deg); }
-        }
-        .counter {
-            font-size: 5rem;
-            color: #ff0066;
+            color: #d32f2f;
             font-weight: bold;
-            margin: 1rem 0;
-            text-shadow: 3px 3px 0px rgba(255, 153, 204, 0.5);
-        }
-        .final-box {
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            margin: 3rem auto;
-            box-shadow: 0 10px 30px rgba(255, 0, 102, 0.3);
-            border: 5px dashed #ff0066;
-        }
-        .sticker {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            opacity: 0.8;
-        }
-        .certificate {
-            background: #fff9f9;
-            padding: 2rem;
-            border: 15px solid #ffccdd;
-            margin: 2rem auto;
-            max-width: 600px;
-            position: relative;
-            transform: rotate(-2deg);
-        }
-        .certificate:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><text x="10" y="50" font-family="Arial" font-size="15" fill="rgba(255,0,102,0.05)">★Fatik★</text></svg>');
-            opacity: 0.3;
-            pointer-events: none;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Fatik İlgi Merkezi</h1>
-        <p style="font-size: 1.5rem;">"Dünyanın en sevimli insanına özel tasarım"</p>
-    </header>
-
-    <div class="container">
-        <!-- 1. Soru -->
-        <div class="question-box" id="question1">
-            <h2>Fatik dünyanın en harika insanı mı?</h2>
-            <button class="btn btn-yes" id="yes1">Tabi ki öyle!</button>
-            <button class="btn btn-no" id="no1">Hayır, dünyanın en en en harikası!</button>
-        </div>
-
-        <!-- 2. Soru (Gizli) -->
-        <div class="question-box" id="question2" style="display:none;">
-            <h2>Fatik olmasaydı evren ne kadar sıkıcı olurdu?</h2>
-            <div style="font-size: 5rem; margin: 1rem 0;">😴💤☠️</div>
-            <button class="btn btn-yes" id="yes2">Çok çok sıkıcı!</button>
-            <button class="btn btn-no" id="no2">Düşünmek bile istemiyorum o benim neşemm!</button>
-        </div>
-
-        <!-- 3. Soru (Gizli) -->
-        <div class="question-box" id="question3" style="display:none;">
-            <h2>Fatik'in gülüşü güneşten daha mı parlak?</h2>
-            <div style="font-size: 3rem; margin: 1rem 0;">🌞 vs 😊</div>
-            <button class="btn btn-yes" id="yes3">Tabii ki Fatik kazandı!</button>
-            <button class="btn btn-no" id="no3">Güneş kim oluyor ki!</button>
-        </div>
-
-        <!-- İltifatlar (Gizli) -->
-        <div id="compliments" class="celebration">
-            <h2>Fatik Hakkında Şaşırtıcı Gerçekler!</h2>
-            
-            <!-- Yeni eklenen göz iltifatı -->
-            <div class="eye-compliment">
-                <h3>👀 Büyüleyici Gözler 👀</h3>
-                <p>Fatik'in o siyah gözleri öyle derin ki, içine bakan kendini kaybediyor. Batman'ın gecesini aydınlatan iki yıldız gibi parlıyorlar!</p>
-                <div style="text-align: center; font-size: 3rem; margin-top: 1rem;">✨👁️👄👁️✨</div>
-            </div>
-            
-            <div class="compliment">
-                <h3>✨ Süper Güçler ✨</h3>
-                <p>Fatik'in tek bakışıyla dünyadaki tüm mutsuzlukları yok edebileceği bilimsel olarak kanıtlanmıştır.</p>
-            </div>
-            
-            <div class="compliment">
-                <h3>🏆 Rekorlar Kitabı 🏆</h3>
-                <p>"Bir insanda bulunabilecek en yüksek sevimlilik ve tatlılık seviyesi" kategorisinde rekor sahibidir.</p>
-            </div>
-            
-            <div class="compliment">
-                <h3>🧠 Einstein'dan Daha Zeki 🧠</h3>
-                <p>Fatik'in zeka seviyesi ölçülemeyecek kadar yüksek olduğu için yeni bir ölçek icat edilmiştir.</p>
-            </div>
-            
-            <div class="counter" id="counter">0</div>
-            <p>kişi Fatik'in mükemmelliği konusunda hemfikir</p>
-            
-            <button class="btn btn-yes" id="moreCompliments">Daha fazla iltifat istiyorum!</button>
-        </div>
-
-        <!-- Sertifika (Gizli) -->
-        <div id="certificate" class="celebration final-box" style="display:none;">
-            <div class="certificate">
-                <h2 style="font-size: 2.5rem; color: #ff0066;">RESMİ SERTİFİKA</h2>
-                <p style="font-size: 1.2rem;">Bu belgeyle Fatik'in:</p>
-                <h3 style="font-size: 2rem; margin: 1rem 0;">DÜNYANIN EN SEVİMLİ İNSANI</h3>
-                <p style="font-size: 1.2rem;">olduğu resmen onaylanmıştır.</p>
-                <div style="margin: 2rem 0; height: 100px; position: relative;">
-                    <div style="position: absolute; left: 20%; bottom: 0; transform: rotate(-10deg);">🐻</div>
-                    <div style="position: absolute; left: 40%; bottom: 0; transform: rotate(5deg);">❤️</div>
-                    <div style="position: absolute; left: 60%; bottom: 0; transform: rotate(-5deg);">🌟</div>
-                    <div style="position: absolute; left: 80%; bottom: 0; transform: rotate(10deg);">🎀</div>
-                </div>
-                <p style="font-style: italic;">Bu sertifika sonsuza kadar geçerlidir.</p>
-            </div>
-            <button class="btn btn-yes" id="finalBtn">BENİ TAMAMEN HAK ETTİN FATİK!</button>
-        </div>
-
-        <!-- Final (Gizli) -->
-        <div id="final" class="celebration" style="display:none;">
-            <h2 style="font-size: 3rem; color: #ff0066;">TEBRİKLER Canikcimmm!</h2>
-            <p style="font-size: 1.5rem;">Resmen "Dünyanın En Harika İnsanı" seçildin! 🎉</p>
-            <div style="font-size: 5rem; margin: 2rem 0;">🏆👑💖</div>
-            <p style="font-size: 1.2rem;">Bu unvanı sonsuza kadar taşıyacaksın!</p>
-        </div>
+    <div id="playerForm">
+        <input type="text" id="playerName" placeholder="Adınız" required>
+        <input type="text" id="roomIdInput" placeholder="Oda ID">
+        <button onclick="joinRoom()">Odaya Katıl</button>
     </div>
+    
+    <div id="status">Oda bekleniyor...</div>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <div id="message" style="text-align:center;"></div>
 
+    <!-- Firebase ve Oyun JS -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script>
-        // Soru butonları
-        const yes1 = document.getElementById('yes1');
-        const no1 = document.getElementById('no1');
-        const yes2 = document.getElementById('yes2');
-        const no2 = document.getElementById('no2');
-        const yes3 = document.getElementById('yes3');
-        const no3 = document.getElementById('no3');
-        const moreCompliments = document.getElementById('moreCompliments');
-        const finalBtn = document.getElementById('finalBtn');
+        // Firebase konfigürasyonu (kendi bilgilerinizle değiştirin)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+            projectId: "YOUR_PROJECT",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
 
-        // Bölümler
-        const question1 = document.getElementById('question1');
-        const question2 = document.getElementById('question2');
-        const question3 = document.getElementById('question3');
-        const compliments = document.getElementById('compliments');
-        const certificate = document.getElementById('certificate');
-        const final = document.getElementById('final');
+        // Oyun değişkenleri
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let playerId, roomId, playerName;
+        let players = {};
+        let currentPlayer = {
+            x: 200,
+            y: 200,
+            color: '#d32f2f',
+            name: ''
+        };
 
-        // Counter
-        const counter = document.getElementById('counter');
+        // Odaya katıl
+        function joinRoom() {
+            playerName = document.getElementById('playerName').value;
+            roomId = document.getElementById('roomIdInput').value || generateRoomId();
+            
+            if (!playerName) {
+                alert("Lütfen bir isim girin!");
+                return;
+            }
 
-        // 1. Soru
-        yes1.addEventListener('click', () => {
-            question1.style.display = 'none';
-            question2.style.display = 'block';
-        });
-
-        no1.addEventListener('click', () => {
-            question1.style.display = 'none';
-            question2.style.display = 'block';
-        });
-
-        // 2. Soru
-        yes2.addEventListener('click', () => {
-            question2.style.display = 'none';
-            question3.style.display = 'block';
-        });
-
-        no2.addEventListener('click', () => {
-            question2.style.display = 'none';
-            question3.style.display = 'block';
-        });
-
-        // 3. Soru
-        yes3.addEventListener('click', () => {
-            question3.style.display = 'none';
-            compliments.style.display = 'block';
-            startCounter();
-        });
-
-        no3.addEventListener('click', () => {
-            question3.style.display = 'none';
-            compliments.style.display = 'block';
-            startCounter();
-        });
-
-        // Daha fazla iltifat butonu
-        moreCompliments.addEventListener('click', () => {
-            compliments.style.display = 'none';
-            certificate.style.display = 'block';
-        });
-
-        // Final butonu
-        finalBtn.addEventListener('click', () => {
-            certificate.style.display = 'none';
-            final.style.display = 'block';
-            createFloatingHearts();
-        });
-
-        // Counter animasyonu
-        function startCounter() {
-            let count = 0;
-            const target = Math.floor(Math.random() * 5000) + 1000;
-            const interval = setInterval(() => {
-                count += Math.floor(target / 20);
-                if (count >= target) {
-                    count = target;
-                    clearInterval(interval);
-                }
-                counter.textContent = count;
-            }, 50);
-        }
-
-        // Uçan kalpler
-        function createFloatingHearts() {
-            const hearts = ['❤️', '💖', '💕', '💗', '💓', '💘', '💝', '💞'];
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.className = 'floating';
-                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                document.body.appendChild(heart);
-                setTimeout(() => {
-                    heart.remove();
-                }, 5000);
-            }, 300);
-        }
-
-        // Hayır butonlarını hareket ettirme
-        const noButtons = [no1, no2, no3];
-        noButtons.forEach(btn => {
-            btn.addEventListener('mouseover', () => {
-                btn.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(${Math.random() * 20 - 10}deg)`;
-                btn.style.transition = 'all 0.1s';
+            playerId = 'player_' + Math.random().toString(36).substr(2, 9);
+            currentPlayer.name = playerName;
+            
+            // Firebase'de oda oluştur
+            const roomRef = database.ref('rooms/' + roomId);
+            
+            // Oyuncu bilgilerini gönder
+            roomRef.child(playerId).set({
+                x: currentPlayer.x,
+                y: currentPlayer.y,
+                name: playerName,
+                color: currentPlayer.color
             });
+            
+            // Diğer oyuncuları dinle
+            roomRef.on('value', (snapshot) => {
+                players = snapshot.val() || {};
+                updateStatus();
+                
+                // Kazanma kontrolü
+                checkWinCondition();
+            });
+            
+            document.getElementById('status').textContent = `Oda: ${roomId} | Oyuncu: ${playerName}`;
+            document.getElementById('playerForm').style.display = 'none';
+            
+            // Oyun döngüsünü başlat
+            gameLoop();
+        }
+
+        // Oyun döngüsü
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Tüm oyuncuları çiz
+            for (const id in players) {
+                const player = players[id];
+                ctx.fillStyle = player.color;
+                ctx.beginPath();
+                ctx.arc(player.x, player.y, 15, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // İsimleri yaz
+                ctx.fillStyle = '#000';
+                ctx.font = '12px Arial';
+                ctx.fillText(player.name, player.x - 15, player.y - 20);
+            }
+            
+            // Kalp çiz (buluşma noktası)
+            ctx.fillStyle = '#ff4081';
+            ctx.beginPath();
+            ctx.arc(200, 200, 10, 0, Math.PI * 2);
+            ctx.fill();
+            
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Klavye kontrolleri
+        document.addEventListener('keydown', (e) => {
+            if (!roomId) return;
+            
+            const moveAmount = 10;
+            let moved = false;
+            
+            switch(e.key) {
+                case 'ArrowUp': currentPlayer.y -= moveAmount; moved = true; break;
+                case 'ArrowDown': currentPlayer.y += moveAmount; moved = true; break;
+                case 'ArrowLeft': currentPlayer.x -= moveAmount; moved = true; break;
+                case 'ArrowRight': currentPlayer.x += moveAmount; moved = true; break;
+            }
+            
+            if (moved) {
+                // Pozisyonu güncelle
+                database.ref('rooms/' + roomId + '/' + playerId).update({
+                    x: currentPlayer.x,
+                    y: currentPlayer.y
+                });
+            }
         });
+
+        // Kazanma kontrolü
+        function checkWinCondition() {
+            if (Object.keys(players).length === 2) {
+                const playerIds = Object.keys(players);
+                const p1 = players[playerIds[0]];
+                const p2 = players[playerIds[1]];
+                
+                // İki oyuncu merkeze yakınsa
+                const distance = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+                if (distance < 30) {
+                    document.getElementById('message').innerHTML = 
+                        `<h1 style="color:#d32f2f">${p1.name} ve ${p2.name} buluştu! ❤️</h1>
+                         <p>Birbirinizi çok seviyorsunuz!</p>`;
+                }
+            }
+        }
+
+        function updateStatus() {
+            const playerCount = Object.keys(players).length;
+            document.getElementById('status').textContent = 
+                `Oda: ${roomId} | Oyuncular: ${playerCount}/2`;
+        }
+
+        function generateRoomId() {
+            return Math.random().toString(36).substr(2, 5);
+        }
     </script>
 </body>
 </html>
