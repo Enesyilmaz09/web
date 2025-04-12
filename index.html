@@ -8,46 +8,85 @@
         body {
             margin: 0;
             padding: 0;
-            background: #000 url('https://i.imgur.com/6VybX2a.jpg') no-repeat center;
+            background: #111 linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=2070&auto=format&fit=crop') no-repeat center;
             background-size: cover;
             height: 100vh;
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             text-align: center;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         .container {
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.8);
             padding: 30px;
-            border-radius: 10px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 30px rgba(255, 77, 77, 0.5);
         }
         h1 {
             color: #ff4d4d;
-            font-size: 28px;
+            font-size: 2rem;
+            margin-bottom: 5px;
         }
         p {
-            font-size: 18px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+        .player-container {
+            margin-top: 20px;
+        }
+        #progress-container {
+            width: 100%;
+            height: 6px;
+            background: #333;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        #progress-bar {
+            height: 100%;
+            background: #ff4d4d;
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
         }
         button {
             background: #ff4d4d;
             color: white;
             border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 50px;
             cursor: pointer;
-            margin-top: 20px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        /* YouTube player'ı tam ekran gizle */
-        #youtube-frame {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border: none;
+        button:hover {
+            background: #ff3333;
+            transform: scale(1.05);
+        }
+        button:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+        .time {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.9rem;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -55,44 +94,89 @@
     <div class="container">
         <h1>Aslı Demirer & Gökhan Türkmen</h1>
         <p>🎵 Korkak</p>
-        <button id="play-btn">ŞARKIYI BAŞLAT</button>
         
-        <!-- YouTube iframe (gizli) -->
-        <iframe 
-            id="youtube-frame"
-            src="https://www.youtube.com/embed/3u-7V-JI6Ko?enablejsapi=1&origin=http://localhost" 
-            allow="autoplay; encrypted-media" 
-            allowfullscreen>
-        </iframe>
+        <div class="player-container">
+            <div id="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+            <div class="time">
+                <span id="current-time">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+            
+            <div class="controls">
+                <button id="play-btn">▶ Oynat</button>
+                <button id="pause-btn" disabled>⏸ Duraklat</button>
+            </div>
+        </div>
+        
+        <audio id="audio-player">
+            <!-- Google Drive MP3 Linki (Direct Download) -->
+            <source src="https://drive.google.com/uc?export=download&id=1xX1oGsde2gmApFd3cV2AzfVahAjssFy3" type="audio/mpeg">
+            Tarayıcınız audio öğesini desteklemiyor.
+        </audio>
     </div>
 
     <script>
-        // 1. YÖNTEM: Butonla başlat (en garantili çözüm)
-        document.getElementById('play-btn').addEventListener('click', function() {
-            const iframe = document.getElementById('youtube-frame');
-            iframe.src += "&autoplay=1";
-            this.style.display = 'none';
-            
-            // 2. YÖNTEM: Alternatif API (mobil için)
-            if (typeof YT !== 'undefined') {
-                new YT.Player('youtube-frame', {
-                    events: {
-                        'onReady': function(event) {
-                            event.target.playVideo();
-                        }
-                    }
+        const player = document.getElementById('audio-player');
+        const playBtn = document.getElementById('play-btn');
+        const pauseBtn = document.getElementById('pause-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
+        const currentTimeEl = document.getElementById('current-time');
+        const durationEl = document.getElementById('duration');
+
+        // Oynat/Duraklat kontrolleri
+        playBtn.addEventListener('click', () => {
+            player.play()
+                .then(() => {
+                    playBtn.disabled = true;
+                    pauseBtn.disabled = false;
+                })
+                .catch(e => {
+                    alert("Oynatma başlatılamadı: Lütfen sayfayı tıklayıp tekrar deneyin");
                 });
-            }
         });
 
-        // 3. YÖNTEM: Sayfa tıklanınca çal (ekstra)
-        document.body.addEventListener('click', function() {
-            const iframe = document.getElementById('youtube-frame');
-            iframe.src += "&autoplay=1";
-        }, { once: true });
+        pauseBtn.addEventListener('click', () => {
+            player.pause();
+            playBtn.disabled = false;
+            pauseBtn.disabled = true;
+        });
+
+        // Zaman güncellemeleri
+        player.addEventListener('timeupdate', updateProgress);
+        player.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(player.duration);
+        });
+
+        function updateProgress() {
+            const progressPercent = (player.currentTime / player.duration) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+            currentTimeEl.textContent = formatTime(player.currentTime);
+        }
+
+        // İlerleme çubuğuna tıklayarak şarkıyı atlama
+        progressContainer.addEventListener('click', (e) => {
+            const width = progressContainer.clientWidth;
+            const clickX = e.offsetX;
+            player.currentTime = (clickX / width) * player.duration;
+        });
+
+        // Zaman formatı (dakika:saniye)
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Şarkı bittiğinde
+        player.addEventListener('ended', () => {
+            progressBar.style.width = '0%';
+            currentTimeEl.textContent = '0:00';
+            playBtn.disabled = false;
+            pauseBtn.disabled = true;
+        });
     </script>
-    
-    <!-- YouTube API (mobil uyumluluk için) -->
-    <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
