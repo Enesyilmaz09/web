@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geçmiş Olsun Mektubu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8d2d56;   /* Koyu Gül Kurusu */
+            --secondary-color: #d86a92; /* Canlı Pembe */
+            --accent-color: #ff9eb5;    /* Açık Pembe */
+            --text-color: #5c5457;      /* Sıcak Koyu Gri Metin */
+            --paper-bg: #fffaf0;        /* Antik kağıt rengi */
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --gold: #d4af37;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-color);
+            background-color: #f9f3f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 158, 181, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(141, 45, 86, 0.1) 0%, transparent 20%);
+        }
+
+        .letter-container {
+            width: 100%;
+            max-width: 700px;
+            perspective: 1000px;
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .letter {
+            width: 100%;
+            background: var(--paper-bg);
+            border-radius: 8px;
+            box-shadow: 
+                0 5px 15px var(--shadow-color),
+                0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 2.5rem 1.5rem;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .letter:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--primary-color));
+            opacity: 0.7;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        .letter-header:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin: 0 0 0.5rem 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1:after {
+            content: '❤';
+            position: absolute;
+            right: -25px;
+            top: 5px;
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            animation: pulse 2s infinite;
+        }
+
+        .date {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+            padding: 0 10px;
+        }
+
+        .date:before, .date:after {
+            content: '✽';
+            margin: 0 8px;
+            color: var(--accent-color);
+        }
+
+        .letter-content {
+            font-size: 1rem;
+            line-height: 1.8;
+            text-align: justify;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .letter-content p {
+            margin: 1.5rem 0;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(216, 106, 146, 0.15) 0%, rgba(216, 106, 146, 0.05) 100%);
+            padding: 1.2rem 1rem;
+            border-radius: 8px;
+            font-style: italic;
+            border-left: 3px solid var(--secondary-color);
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .highlight:before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            font-family: 'Playfair Display', serif;
+            opacity: 0.3;
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            text-align: right;
+            margin-top: 2.5rem;
+            margin-right: 1rem;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+            padding-right: 35px;
+        }
+
+        .signature:after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 25px;
+            height: 25px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23d86a92'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.8;
+        }
+
+        .seal {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, var(--primary-color), #6b1f3d);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 0.6rem;
+            font-weight: bold;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+            transform: rotate(-15deg);
+            border: 2px dashed rgba(255, 255, 255, 0.4);
+            margin-top: 2rem;
+            margin-left: 1rem;
+        }
+
+        .seal:before {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+        }
+
+        .lale-container {
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            opacity: 0.7;
+            transform: rotate(15deg);
+            z-index: 2;
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.2));
+        }
+
+        /* Dekoratif elementler */
+        .corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+        }
+
+        .corner-tl {
+            top: 10px;
+            left: 10px;
+            border-top: 2px solid var(--primary-color);
+            border-left: 2px solid var(--primary-color);
+            opacity: 0.3;
+        }
+
+        .corner-tr {
+            top: 10px;
+            right: 10px;
+            border-top: 2px solid var(--primary-color);
+            border-right: 2px solid var(--primary-color);
+            opacity: 0.3;
+        }
+
+        .corner-bl {
+            bottom: 10px;
+            left: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            border-left: 2px solid var(--primary-color);
+            opacity: 0.3;
+        }
+
+        .corner-br {
+            bottom: 10px;
+            right: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            border-right: 2px solid var(--primary-color);
+            opacity: 0.3;
+        }
+
+        /* Mektup kâğıdı çizgileri */
+        .letter {
+            background-image: 
+                linear-gradient(90deg, transparent 79px, rgba(171, 206, 212, 0.3) 79px, rgba(171, 206, 212, 0.3) 81px, transparent 81px),
+                linear-gradient(rgba(238, 238, 238, 0.3) 0.1em, transparent 0.1em);
+            background-size: 100% 1.5em;
+            background-position: 0 1.2em;
+        }
+
+        /* Animasyonlar */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(15deg); }
+            50% { transform: translateY(-5px) rotate(12deg); }
+            100% { transform: translateY(0) rotate(15deg); }
+        }
+
+        .letter-header {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .letter-content {
+            animation: fadeIn 1.2s ease-out 0.3s both;
+        }
+
+        .signature {
+            animation: fadeIn 1.4s ease-out 0.6s both;
+        }
+
+        .seal {
+            animation: fadeIn 1.6s ease-out 0.8s both;
+        }
+
+        .lale-container {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Footer (mühür alanı) */
+        .letter-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        /* Kalp konfetileri */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        .confetti:before {
+            content: '❤;
+            color: var(--secondary-color);
+            font-size: 10px;
+        }
+
+        /* Tablet ve daha büyük ekranlar için */
+        @media (min-width: 768px) {
+            .letter {
+                padding: 3.5rem 3rem;
+            }
+            
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .letter-content {
+                font-size: 1.1rem;
+            }
+            
+            .signature {
+                font-size: 2.4rem;
+            }
+            
+            .seal {
+                width: 70px;
+                height: 70px;
+                font-size: 0.7rem;
+            }
+            
+            .lale-container {
+                top: -30px;
+                right: -15px;
+            }
+            
+            .corner {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .corner-tl {
+                top: 15px;
+                left: 15px;
+            }
+            
+            .corner-tr {
+                top: 15px;
+                right: 15px;
+            }
+            
+            .corner-bl {
+                bottom: 15px;
+                left: 15px;
+            }
+            
+            .corner-br {
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .letter-header:after {
+                left: 30%;
+                right: 30%;
+            }
+        }
+
+        /* Çok küçük ekranlar için */
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .signature {
+                font-size: 1.7rem;
+            }
+            
+            .lale-container {
+                transform: scale(0.6) rotate(15deg);
+                right: -20px;
+            }
+            
+            .letter-footer {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .seal {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="letter-container">
+        <!-- Lale çiçeği -->
+        <div class="lale-container">
+            <svg viewBox="0 0 200 400" width="100" height="200" xmlns="http://www.w3.org/2000/svg" aria-label="Lale">
+                <!-- Sap -->
+                <rect x="97" y="150" width="6" height="200" fill="#2e8b57" />
+                <!-- Yapraklar -->
+                <path d="M100 220 C40 180, 60 280, 100 300 Z" fill="#3cb371" />
+                <path d="M100 250 C160 200, 140 300, 100 320 Z" fill="#3cb371" />
+                <!-- Lale başı -->
+                <path d="M100 60 
+                         C60 40, 60 120, 100 150
+                         C140 120, 140 40, 100 60 Z" 
+                      fill="#d62828" />
+                <!-- İç gölge/derinlik efekti -->
+                <path d="M100 60 
+                         C80 50, 80 120, 100 145
+                         Z" fill="#b71c1c" opacity="0.6"/>
+            </svg>
+        </div>
+        
+        <div class="letter">
+            <div class="corner corner-tl"></div>
+            <div class="corner corner-tr"></div>
+            <div class="corner corner-bl"></div>
+            <div class="corner corner-br"></div>
+            
+            <div class="letter-header">
+                <h1>Geçmiş Olsun</h1>
+                <div class="date">31.08.2025</div>
+            </div>
+            
+            <div class="letter-content">
+                <p>Geçmiş Olsun Neşem,</p>
+                
+                <p>Umarım gözlerin artık hem sağlıkla görüyor hem de bakışlarındaki o özel ışıltı katlanarak artıyordur.</p>
+                
+                <p class="highlight">Umarım sorunsuz geçmiştir; canının hiç acımıyordur. En kısa sürede sağlığına kavuşmanı diliyorum. O güzel gözlerine çok iyi bak, onlar çok değerliler...</p>
+                
+                <p>Bu süreçte gözlerine iyi bak, TikTok'la arana biraz mesafe koy.</p>
+                <p>Bol bol uyu, gözlerin dinlenecek ve sana iyi gelecek.</p>
+                <p>İlk zamanlar sigara dumanı gözlere çok zararlı. Sakın içme ve içilen ortamda da bulunma.</p>
+            </div>
+            
+            <div class="letter-footer">
+                <div class="signature">Seni seven ve değer veren Neşen</div>
+                <div class="seal">Mühür</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Konfeti efekti için
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.letter-container');
+            const confettiCount = 15;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // Rastgele pozisyon
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                
+                // Rastgele animasyon gecikmesi
+                const delay = Math.random() * 2;
+                
+                confetti.style.left = `${posX}%`;
+                confetti.style.top = `${posY}%`;
+                confetti.style.animation = `float ${4 + Math.random() * 4}s ease-in-out ${delay}s infinite`;
+                
+                container.appendChild(confetti);
+            }
+        });
+    </script>
+</body>
+</html>
