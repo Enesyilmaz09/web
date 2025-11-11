@@ -267,7 +267,7 @@
     <button id="noButton">Hayır(Tavsiye etmem)</button>
 
     <div class="glass-container" id="success-screen">
-        <h1>Sevgilimmm  ❤️</h1>
+        <h1>Sevgilimmm ❤️</h1>
         <p>Dünyanın en şanslı insanıyım! Artık Sevgilimsin biliyorsun değilmi bundan kaçış yok :)</p>
         
         <div class="animated-heart"></div>
@@ -284,12 +284,22 @@
         // AŞAMA 2: ANKET SORULARI (2 Soruya Güncellendi)
         const quizQuestions = [
             {
-                question: "Dünyanın en tatlı kızı kim, Betülüm?",
-                answers: ["Ben (Tabii ki!)", "Annemin kızı (O da doğru)", "Enes'in Betül'ü (İşte bu!)"]
+                // YENİ İLK SORU
+                question: "Öncelikle en önemli soru: Sen beni seviyor musun, Betülüm?",
+                answers: [
+                    "Evet, kalbimin her zerresiyle!", 
+                    "Birazcık seviyorum...", 
+                    "sevdiğimi biliyorsun zaten :)"
+                ]
             },
             {
-                question: "Peki, 'Enes'in Betül'ü'... Sence bu 'Enes', seninle olmaya hazır mı?",
-                answers: ["Hazır! (Ben de hazırım!)", "En hazırından bile hazır!", "Hadi artık asıl soruyu sor!"]
+                // YENİ İKİNCİ SORU
+                question: "Peki, bu sevgi sence ne kadar büyük bir sevgi?",
+                answers: [
+                    "Dünyalar kadar, hatta daha da fazla!", 
+                    "Güneşten daha sıcak, aydan daha parlak!", 
+                    "Sonsuz ve sınırsız bir sevgi. Nokta."
+                ]
             }
         ];
         
@@ -466,4 +476,3 @@
     </script>
 </body>
 </html>
-
